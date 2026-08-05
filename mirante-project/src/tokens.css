@@ -1,0 +1,45 @@
+/* Hallmark · genre: editorial · macrostructure: Catalogue · theme: Atelier · enrichment: none · nav: N6 · footer: Ft6 */
+
+:root {
+  /* --- Color: warm coffee anchor (hue 50) --- */
+  --color-paper:    oklch(97% 0.012 60);
+  --color-paper-2:  oklch(93% 0.014 58);
+  --color-rule:     oklch(82% 0.02  55);
+  --color-neutral:  oklch(56% 0.02  50);
+  --color-muted:    oklch(40% 0.02  45);
+  --color-ink:      oklch(20% 0.02  40);
+  --color-accent:   oklch(48% 0.15  35); /* terracotta */
+  --color-focus:    oklch(55% 0.18  35);
+
+  /* --- Type --- */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-display: clamp(2.25rem, 5vw, 3.75rem);
+
+  /* --- Space (4pt scale) --- */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* --- Misc --- */
+  --rule-hair: 1px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-med:  250ms;
+  --page-gutter: clamp(1.25rem, 5vw, 3rem);
+}
