@@ -1,13 +1,56 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mirante-project</title>
+    <title>Mirante — café de barrio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css"/> 
   </head>
   <body>
-    <div id="app"></div>
+    <header class="nav-mast">
+      <p class="mast-line muted">No 01 · Barrio · Est. 2026</p>
+      <h1 class="mast-name"></h1>
+      <nav class="mast-nav" aria-label="Principal">
+        <ul>
+          <li><a href="#menu">Menú</a></li>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#visitanos">Visítanos</a></li>
+        </ul>
+      </nav>
+      <hr class="mast-rule double" aria-hidden="true" />
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="intro__tag"></p>
+      </section>
+
+      <section id="testimonios" class="overflow-hidden">
+        <div class="testimonials-marquee" aria-label="Testimonios de clientes">
+          <div class="testimonials-track">
+            <ul class="list"></ul>
+           
+          </div>
+
+
+
+        </div>
+        
+
+      </section>
+
+
+    <footer class="foot-letter"> 
+      <p class="foot-letter__close">Yours,<br /><span class="foot-letter__sign">— El equipo de Mirante</span></p>
+      <p class="foot-letter__ps muted">P.S. — te esperamos con la mesa lista.</p>
+    </footer>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>
