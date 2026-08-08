@@ -20,17 +20,17 @@
   --text-sm:   0.8rem;
   --text-base: 1rem;
   --text-md:   1.25rem;
-  --text-lg:   1.5625rem;
+  --text-lg:   1.5625rem;  /* 25px */
   --text-xl:   1.9531rem;
   --text-2xl:  2.4414rem;
   --text-display: clamp(2.25rem, 5vw, 3.75rem);
 
   /* --- Space (4pt scale) --- */
   --space-3xs: 0.125rem;
-  --space-2xs: 0.25rem;
-  --space-xs:  0.5rem;
-  --space-sm:  0.75rem;
-  --space-md:  1rem;
+  --space-2xs: 0.25rem; /* 4px */
+  --space-xs:  0.5rem; /* 8px */
+  --space-sm:  0.75rem; /* 12px */
+  --space-md:  1rem; /* 16px */
   --space-lg:  1.5rem;
   --space-xl:  2.5rem;
   --space-2xl: 4rem;
@@ -42,4 +42,14 @@
   --dur-fast: 150ms;
   --dur-med:  250ms;
   --page-gutter: clamp(1.25rem, 5vw, 3rem);
+
+
+  /* --- Tamaño de las cajas mapa/tarjeta (sección "Encuéntrame") ---
+     Renombrado de --section-width/height a --card-width/height: el nombre
+     anterior no describía dónde se usaban realmente (mapa y tarjeta).
+     --card-width ahora usa clamp() para que en pantallas angostas (mobile)
+     no desborde: nunca baja de 280px ni sube de 360px, y en medio se ajusta
+     al 90% del viewport. */
+  --card-width: clamp(280px, 90vw, 360px);
+  --card-height: 480px;
 }

@@ -8,6 +8,16 @@ html {
   box-sizing: border-box;
 }
 
+/* Fix: antes #map fijaba su propio tamaño con los mismos tokens que .mapa
+   (su contenedor). Como .mapa tiene box-sizing: border-box + borde de 1px,
+   su área interior real era 2px más chica que el token, y #map (forzado al
+   tamaño completo del token) se salía por encima del borde redondeado.
+   Ahora #map simplemente hereda el 100% del espacio interior de .mapa. */
+#map {
+  height: 100%;
+  width: 100%;
+}
+
 body {
   margin: 0;
   background: var(--color-paper);
@@ -24,6 +34,94 @@ a {
 .muted {
   color: var(--color-muted);
 }
+/* Mapa e informacion de contacto */
+.contenedor{
+  width: 90%;
+  max-width: 1280px;
+  margin: 40px auto;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  gap: var(--space-md);
+
+  /* Fix: mapa (360px) + tarjeta (360px) + gap no cabían en pantallas de
+     celular y se cortaban silenciosamente (html tiene overflow-x: clip,
+     así que no había scroll ni aviso visual del corte). Con flex-wrap
+     se apilan verticalmente cuando no hay espacio horizontal suficiente. */
+  flex-wrap: wrap;
+}
+.mapa{
+  /* Tokens renombrados: ver comentario en tokens.css */
+  width: var(--card-width);
+  height: var(--card-height);
+
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--space-2xs);
+}
+
+.tarjeta{
+  /* Tokens renombrados: ver comentario en tokens.css */
+  width: var(--card-width);
+  min-height: var(--card-height);
+
+  background: var(--color-paper-2);
+
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--space-2xs);
+
+  padding: var(--space-md);
+
+  
+
+}
+
+.tarjeta h2{
+  margin: auto;
+
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+
+
+  color: var(--color-ink);
+
+
+}
+
+.direccion{
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  margin: 0;
+
+  
+  font-family: var(--font-display);
+
+}
+
+
+.tarjeta hr{
+  border: none;
+  border-top: var(--rule-hair) solid var(--color-rule);
+
+  margin: var(--space-md) 0;
+
+}
+
+.dato{
+  margin-bottom: var(--space-md);
+
+  display:flex;
+  flex-direction: column;
+
+  gap: var(--space-2xs);
+}
+
+
+
+
+/* Mapa e informacion de contacto */
+
 
 /* --- Nav (N6 Newspaper masthead) --- */
 
