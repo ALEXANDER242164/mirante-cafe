@@ -62,12 +62,35 @@ async function cargarDatos(){
 
 
 }
-
+// Inicializa el mapa Leaflet y lo centra en las coordenadas de ejemplo
 var map = L.map('map').setView([51.505, -0.09], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+
+// Determina si el sitio está abierto o cerrado según la hora actual
+var horaActual = new Date();
+if (horaActual.getHours() >= 8 && horaActual.getHours() < 21){
+
+    // Bien: ahora sí agrega la clase 'abierto' además del texto — es lo que
+    // hace que .estado tome el color verde de RN1 (definido en style.css).
+    // Antes solo cambiaba el texto y el span se quedaba sin color.
+    document.querySelector('.estado').classList.toggle('cerrado', false);
+    document.querySelector('.estado').classList.add('abierto');
+    document.querySelector('.estado').textContent = 'ABIERTO';
+
+}else{
+
+    // Bien: quita 'abierto' antes de agregar 'cerrado'. Esto asegura que el
+    // <span> nunca tenga las dos clases (y por lo tanto los dos colores) a
+    // la vez — es justo lo que pide RN4: "el mismo elemento, únicamente
+    // cambia de color".
+    document.querySelector('.estado').classList.toggle('abierto', false);
+    document.querySelector('.estado').classList.add('cerrado');
+    document.querySelector('.estado').textContent = 'Mirante esta cerrado';
+}
+
 
 // Se ejecuta apenas carga el script, disparando la carga de datos
 cargarDatos();

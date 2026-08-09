@@ -117,6 +117,20 @@ a {
   gap: var(--space-2xs);
 }
 
+/* estado abierto/cerrado */
+.estado.abierto{
+  background-color: #2ecc71;
+  background-size: cover;
+}
+.estado.cerrado{
+  background-color: #FF3333;
+  display: block;
+  padding: 40px;
+  margin: 0 auto;
+  width: fit-content;
+  color: var(--color-paper);
+}
+
 
 
 
@@ -189,6 +203,8 @@ a {
   padding: 0 var(--page-gutter);
   text-align: center;
 }
+
+
 
 .intro__tag {
   font-family: var(--font-display);
