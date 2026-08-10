@@ -1,0 +1,74 @@
+/* Hallmark · genre: editorial · macrostructure: Catalogue · theme: Atelier · enrichment: none · nav: N6 · footer: Ft6 */
+
+:root {
+  /* --- Color: warm coffee anchor (hue 50) --- */
+  --color-paper:    oklch(97% 0.012 60);
+  --color-paper-2:  oklch(93% 0.014 58);
+  --color-rule:     oklch(82% 0.02  55);
+  --color-neutral:  oklch(56% 0.02  50);
+  --color-muted:    oklch(40% 0.02  45);
+  --color-ink:      oklch(20% 0.02  40);
+  --color-accent:   oklch(48% 0.15  35); /* terracotta */
+  --color-focus:    oklch(55% 0.18  35);
+
+  /* --- Type --- */
+  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-body:    "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-outlier: "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs:   0.64rem;
+  --text-sm:   0.8rem;
+  --text-base: 1rem;
+  --text-md:   1.25rem;
+  --text-lg:   1.5625rem;  /* 25px */
+  --text-xl:   1.9531rem;
+  --text-2xl:  2.4414rem;
+  --text-display: clamp(2.25rem, 5vw, 3.75rem);
+
+  /* --- Space (4pt scale) --- */
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem; /* 4px */
+  --space-xs:  0.5rem; /* 8px */
+  --space-sm:  0.75rem; /* 12px */
+  --space-md:  1rem; /* 16px */
+  --space-lg:  1.5rem;
+  --space-xl:  2.5rem;
+  --space-2xl: 4rem;
+  --space-3xl: 6rem;
+
+  /* --- Misc --- */
+  --rule-hair: 1px;
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 150ms;
+  --dur-med:  250ms;
+  --page-gutter: clamp(1.25rem, 5vw, 3rem);
+
+
+  /* --- Tamaño de las cajas mapa/tarjeta (sección "Encuéntrame") ---
+     Renombrado de --section-width/height a --card-width/height: el nombre
+     anterior no describía dónde se usaban realmente (mapa y tarjeta).
+     --card-width ahora usa clamp() para que en pantallas angostas (mobile)
+     no desborde: nunca baja de 280px ni sube de 360px, y en medio se ajusta
+     al 90% del viewport. */
+  --card-width: clamp(280px, 90vw, 360px);
+  --card-height: 480px;
+
+  /* --- Badge de estado (abierto/cerrado) ---
+     RN2 exige #FF3333 para "cerrado": no se sustituye por otro rojo (p.ej.
+     #e74c3c de una paleta de referencia) sin autorización explícita. */
+  --color-open-base:     #2ecc71; /* = RN1 */
+  --color-open-hover:    #27ae60;
+  --color-closed-base:   #FF3333; /* = RN2 */
+  --color-closed-hover:  #c0392b;
+  --color-white:         #ffffff; /* texto, punto y flash del badge */
+
+  /* Fondo de la cápsula neutra que envuelve el badge (degradado 3 paradas) */
+  --color-badge-bg-from: #f8fafc;
+  --color-badge-bg-mid:  #f1f5f9;
+  --color-badge-bg-to:   #e2e8f0;
+
+  /* Tiempos de las animaciones del badge */
+  --dur-flash: 600ms;              /* destello de cámara, una sola vez */
+  --dur-pulso: 1800ms;             /* punto "en vivo", loop infinito */
+  --estado-delay-cerrado: 0.15s;   /* CERRADO entra 0.15s después de ABIERTO */
+}

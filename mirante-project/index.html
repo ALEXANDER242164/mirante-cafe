@@ -1,13 +1,120 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>mirante-project</title>
+    <title>Mirante — café de barrio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,500&family=IBM+Plex+Sans:wght@400;600&family=JetBrains+Mono:wght@500&display=swap"
+      rel="stylesheet"
+    />
+     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+
+    <link rel="stylesheet" href="/src/style.css"/> 
   </head>
   <body>
-    <div id="app"></div>
+    <header class="nav-mast">
+      <p class="mast-line muted">No 01 · Barrio · Est. 2026</p>
+      <h1 class="mast-name"></h1>
+      <nav class="mast-nav" aria-label="Principal">
+        <ul>
+          <li><a href="#menu">Menú</a></li>
+          <li><a href="#historia">Historia</a></li>
+          <li><a href="#visitanos">Visítanos</a></li>
+        </ul>
+      </nav>
+      <hr class="mast-rule double" aria-hidden="true" />
+    </header>
+
+    <main>
+      <section class="intro">
+        <p class="intro__tag"></p>
+      </section>
+
+      <section id="informacion">
+        <h2>ENCUENTRAME</h2>
+        <div class="contenedor">
+
+          <div class="tarjeta">
+            <div class="tarjeta__header">
+              <h2>INFORMACIÓN</h2>
+              <!-- Cambio: el badge se movió aquí, junto al título, para que
+                   sea visible sin bajar la vista dentro de la tarjeta
+                   (Job 4: usuario de paso quiere un vistazo rápido). Antes
+                   vivía solo al final de la tarjeta. -->
+              <span class="estado-capsula">
+                <span class="estado"></span>
+              </span>
+            </div>
+            <p class="direccion">
+              Luis Donaldo Colosio, 77728 <br>Playa del Carmen, Quintana Roo
+            </p>
+            <hr>
+            <div class="dato">
+              <span class="titulo">Dias</span>
+              <strong>Lunes a Domingo</strong>
+
+            </div>
+            <div class="dato">
+              <span class="titulo">Horarios</span>
+              <strong>8:00 AM - 9:00 PM</strong>
+            </div>
+
+            <!-- Reservado para un futuro click que abra la ubicación en el
+                 mapa. Intencionalmente vacío por ahora: no se implementa la
+                 funcionalidad, solo se reserva el espacio (ver
+                 .tarjeta__accion en style.css). -->
+            <div class="tarjeta__accion"></div>
+
+          </div>
+
+          <div class="mapa">
+            <div id="map"></div>
+
+
+
+          </div>
+
+
+
+        </div>
+
+
+
+
+      </section>
+
+
+
+
+
+      <section id="testimonios" class="overflow-hidden">
+        <div class="testimonials-marquee" aria-label="Testimonios de clientes">
+          <div class="testimonials-track">
+            <ul class="list"></ul>
+           
+          </div>
+
+
+
+        </div>
+        
+
+      </section>
+
+
+    <footer class="foot-letter"> 
+      <p class="foot-letter__close">Yours,<br /><span class="foot-letter__sign">— El equipo de Mirante</span></p>
+      <p class="foot-letter__ps muted">P.S. — te esperamos con la mesa lista.</p>
+    </footer>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
     <script type="module" src="/src/main.js"></script>
   </body>
 </html>

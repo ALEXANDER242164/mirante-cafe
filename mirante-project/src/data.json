@@ -1,0 +1,37 @@
+{
+    "site":{
+        "nombre": "MIRANTE CAFE",
+        "descripcion": "Un rincón para un rato de calma"
+        
+    },
+
+    "comentarios":[
+
+        {
+            "nombre": "Ian Cornelio",
+            "comentario": "Tuve la oportunidad de visitar Mirante café y me pareció un excelente lugar para disfrutar un buen café en Playa del Carmen. El ambiente es agradable, tranquilo y perfecto para una reunión, trabajar un momento o simplemente desconectarse de la rutina con una buena taza de café."
+        },
+        {
+            "nombre": "María López",
+            "comentario": "El ambiente es muy acogedor y el personal es muy amable."
+        },
+        {
+            "nombre": "Carlos García",
+            "comentario": "Me encanta la variedad de cafés que ofrecen, siempre encuentro algo nuevo para probar."
+        },
+        {
+            "nombre": "Ana Torres",
+            "comentario": "El mirador tiene una vista espectacular, ideal para tomar fotos."
+        },
+        {
+            "nombre": "Luis Fernández",
+            "comentario": "Los postres son deliciosos, especialmente el pastel de chocolate."
+        }
+
+
+
+
+        
+    ]
+
+}

@@ -1,296 +1,518 @@
-:root {
-  --text: #6b6375;
-  --text-h: #08060d;
-  --bg: #fff;
-  --border: #e5e4e7;
-  --code-bg: #f4f3ec;
-  --accent: #aa3bff;
-  --accent-bg: rgba(170, 59, 255, 0.1);
-  --accent-border: rgba(170, 59, 255, 0.5);
-  --social-bg: rgba(244, 243, 236, 0.5);
-  --shadow:
-    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+@import "./tokens.css";
 
-  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
-  --mono: ui-monospace, Consolas, monospace;
-
-  font: 18px/145% var(--sans);
-  letter-spacing: 0.18px;
-  color-scheme: light dark;
-  color: var(--text);
-  background: var(--bg);
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-
-  @media (max-width: 1024px) {
-    font-size: 16px;
-  }
+html {
+  overflow-x: clip;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --text: #9ca3af;
-    --text-h: #f3f4f6;
-    --bg: #16171d;
-    --border: #2e303a;
-    --code-bg: #1f2028;
-    --accent: #c084fc;
-    --accent-bg: rgba(192, 132, 252, 0.15);
-    --accent-border: rgba(192, 132, 252, 0.5);
-    --social-bg: rgba(47, 48, 58, 0.5);
-    --shadow:
-      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
-  }
+* {
+  box-sizing: border-box;
+}
 
-  #social .button-icon {
-    filter: invert(1) brightness(2);
-  }
+/* Fix: antes #map fijaba su propio tamaño con los mismos tokens que .mapa
+   (su contenedor). Como .mapa tiene box-sizing: border-box + borde de 1px,
+   su área interior real era 2px más chica que el token, y #map (forzado al
+   tamaño completo del token) se salía por encima del borde redondeado.
+   Ahora #map simplemente hereda el 100% del espacio interior de .mapa. */
+#map {
+  height: 100%;
+  width: 100%;
 }
 
 body {
   margin: 0;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: 1.6;
 }
 
-h1,
-h2 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+a {
+  color: inherit;
 }
 
-h1 {
-  font-size: 56px;
-  letter-spacing: -1.68px;
-  margin: 32px 0;
-  @media (max-width: 1024px) {
-    font-size: 36px;
-    margin: 20px 0;
-  }
+.muted {
+  color: var(--color-muted);
 }
-h2 {
-  font-size: 24px;
-  line-height: 118%;
-  letter-spacing: -0.24px;
-  margin: 0 0 8px;
-  @media (max-width: 1024px) {
-    font-size: 20px;
-  }
+/* Mapa e informacion de contacto */
+.contenedor{
+  width: 90%;
+  max-width: 1280px;
+  margin: 40px auto;
+
+  display: flex;
+  align-items: center;
+
+  justify-content: center;
+  gap: var(--space-md);
+
+  /* Fix: mapa (360px) + tarjeta (360px) + gap no cabían en pantallas de
+     celular y se cortaban silenciosamente (html tiene overflow-x: clip,
+     así que no había scroll ni aviso visual del corte). Con flex-wrap
+     se apilan verticalmente cuando no hay espacio horizontal suficiente. */
+  flex-wrap: wrap;
 }
-p {
+.mapa{
+  /* Tokens renombrados: ver comentario en tokens.css */
+  width: var(--card-width);
+  height: var(--card-height);
+
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--space-2xs);
+}
+
+.tarjeta{
+  /* Tokens renombrados: ver comentario en tokens.css */
+  width: var(--card-width);
+  min-height: var(--card-height);
+
+  background: var(--color-paper-2);
+
+  border: var(--rule-hair) solid var(--color-rule);
+  border-radius: var(--space-2xs);
+
+  padding: var(--space-md);
+
+  /* Fix: .tarjeta pasa a ser un contenedor flex en columna para poder anclar
+     .tarjeta__accion al fondo con margin-top:auto, aprovechando el espacio
+     vertical libre que dejó .estado al mudarse a la cabecera. */
+  display: flex;
+  flex-direction: column;
+
+}
+
+.tarjeta h2{
+  /* Fix: antes "margin:auto" centraba el h2 cuando era hijo suelto de un
+     .tarjeta en flujo de bloque. Ahora vive dentro de .tarjeta__header
+     (fila flex junto al badge), así que se resetea a 0 y el layout lo
+     controla .tarjeta__header. */
+  margin: 0;
+
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+
+
+  color: var(--color-ink);
+
+
+}
+
+.tarjeta__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+
+  /* Fix (mismo problema que .contenedor más arriba): a 280px de ancho de
+     tarjeta ("INFORMACION" + badge) no cabe en una sola fila. flex-wrap
+     evita que se corte silenciosamente (html tiene overflow-x: clip). */
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
+}
+
+.direccion{
+  font-size: var(--text-sm);
+  line-height: 1.4;
+  margin: 0;
+
+  
+  font-family: var(--font-display);
+
+}
+
+
+.tarjeta hr{
+  border: none;
+  border-top: var(--rule-hair) solid var(--color-rule);
+
+  margin: var(--space-md) 0;
+
+}
+
+.dato{
+  margin-bottom: var(--space-md);
+
+  display:flex;
+  flex-direction: column;
+
+  gap: var(--space-2xs);
+}
+
+/* Reservado para una futura función de "abrir ubicación en mapa" al hacer
+   click (no implementada todavía — ver comentario en index.html). Se ancla
+   al fondo con margin-top:auto para ocupar el espacio que .estado dejó
+   libre al mudarse a la cabecera, con un borde punteado para que se lea
+   como un espacio intencional y no como un hueco vacío por error. */
+.tarjeta__accion{
+  margin-top: auto;
+  min-height: 48px;
+  border: 1px dashed var(--color-rule);
+  border-radius: var(--space-2xs);
+}
+
+/* estado abierto/cerrado */
+
+/* Cápsula: fondo neutro (degradado de 3 paradas) que envuelve el badge de
+   color. El color de estado (RN1/RN2) vive en el .estado interior, no aquí,
+   para que la cápsula sea puramente decorativa/neutra. */
+.estado-capsula{
+  display: inline-flex;
+  padding: var(--space-3xs);
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    var(--color-badge-bg-from),
+    var(--color-badge-bg-mid),
+    var(--color-badge-bg-to)
+  );
+}
+
+/* Fix: antes .abierto no tenía ninguna regla base compartida con .cerrado
+   (display/padding/color propios), así que se veía "sin estilo" frente a
+   .cerrado. Ahora hay UNA sola regla base .estado (RN4: "mismo elemento,
+   solo cambia de color") y .abierto/.cerrado solo definen las variables de
+   color que esa base consume vía var(--estado-color). */
+.estado{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-md);
+  border-radius: 999px;
+
+  font-family: var(--font-outlier);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+
+  background-color: var(--estado-color);
+
+  transition:
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform  var(--dur-fast) var(--ease-out);
+}
+
+.estado.abierto{
+  --estado-color: var(--color-open-base);
+  --estado-color-hover: var(--color-open-hover);
+}
+.estado.cerrado{
+  --estado-color: var(--color-closed-base);
+  --estado-color-hover: var(--color-closed-hover);
+}
+
+/* Punto "en vivo": círculo sólido con un anillo animado vía box-shadow (un
+   solo pseudo-elemento, no dos capas) — se repite para siempre. */
+.estado::before{
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-white);
+  animation: estado-pulso var(--dur-pulso) var(--ease-out) infinite;
+}
+@keyframes estado-pulso{
+  0%   { box-shadow: 0 0 0 0   rgba(255,255,255,0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0   rgba(255,255,255,0); }
+}
+
+/* Destello de cámara al entrar: cubre el badge una sola vez y se queda
+   transparente (animation-fill-mode: forwards es obligatorio aquí — sin
+   él, al terminar la animación el ::after volvería a su opacity base y
+   taparía el badge para siempre). */
+.estado::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-white);
+  pointer-events: none;
+  animation: estado-flash var(--dur-flash) var(--ease-out) 1 forwards;
+}
+@keyframes estado-flash{
+  from { opacity: 0.9; }
+  to   { opacity: 0; }
+}
+
+/* CERRADO entra 0.15s más tarde que ABIERTO (spec del rediseño): mismo
+   comportamiento en ambos estados, solo se retrasa el arranque de las
+   animaciones de entrada/loop de .cerrado. */
+.estado.cerrado::before,
+.estado.cerrado::after{
+  animation-delay: var(--estado-delay-cerrado);
+}
+
+/* Hover: brillo del color de estado + leve escalado. Se dispara al pasar el
+   ratón por la cápsula completa (área de hover un poco más generosa que
+   el pill solo), pero el brillo/escala se aplican al .estado interior. */
+.estado-capsula:hover .estado{
+  box-shadow: 0 0 var(--space-lg) 0 var(--estado-color-hover);
+  transform: scale(1.04);
+}
+
+
+
+
+/* Mapa e informacion de contacto */
+
+
+/* --- Nav (N6 Newspaper masthead) --- */
+
+.nav-mast {
+  display: grid;
+  gap: var(--space-2xs);
+  padding: var(--space-lg) var(--page-gutter) 0;
+  text-align: center;
+}
+
+.mast-line {
+  font-variant: small-caps;
+  letter-spacing: 0.08em;
+  font-size: var(--text-xs);
   margin: 0;
 }
 
-code,
-.counter {
-  font-family: var(--mono);
+.mast-name {
+  font-family: var(--font-display);
+  font-size: var(--text-display);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 0.95;
+  margin: 0;
+}
+
+.mast-nav ul {
   display: inline-flex;
-  border-radius: 4px;
-  color: var(--text-h);
-}
-
-code {
-  font-size: 15px;
-  line-height: 135%;
-  padding: 4px 8px;
-  background: var(--code-bg);
-}
-
-.counter {
-  font-size: 16px;
-  padding: 5px 10px;
-  border-radius: 5px;
-  color: var(--accent);
-  background: var(--accent-bg);
-  border: 2px solid transparent;
-  transition: border-color 0.3s;
-  margin-bottom: 24px;
-
-  &:hover {
-    border-color: var(--accent-border);
-  }
-  &:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-  }
-}
-
-.hero {
-  position: relative;
-
-  .base,
-  .framework,
-  .vite {
-    inset-inline: 0;
-    margin: 0 auto;
-  }
-
-  .base {
-    width: 170px;
-    position: relative;
-    z-index: 0;
-  }
-
-  .framework,
-  .vite {
-    position: absolute;
-  }
-
-  .framework {
-    z-index: 1;
-    top: 34px;
-    height: 28px;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
-      scale(1.4);
-  }
-
-  .vite {
-    z-index: 0;
-    top: 107px;
-    height: 26px;
-    width: auto;
-    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
-      scale(0.8);
-  }
-}
-
-#app {
-  width: 1126px;
-  max-width: 100%;
-  margin: 0 auto;
-  text-align: center;
-  border-inline: 1px solid var(--border);
-  min-height: 100svh;
-  display: flex;
-  flex-direction: column;
-  box-sizing: border-box;
-}
-
-#center {
-  display: flex;
-  flex-direction: column;
-  gap: 25px;
-  place-content: center;
-  place-items: center;
-  flex-grow: 1;
-
-  @media (max-width: 1024px) {
-    padding: 32px 20px 24px;
-    gap: 18px;
-  }
-}
-
-#next-steps {
-  display: flex;
-  border-top: 1px solid var(--border);
-  text-align: left;
-
-  & > div {
-    flex: 1 1 0;
-    padding: 32px;
-    @media (max-width: 1024px) {
-      padding: 24px 20px;
-    }
-  }
-
-  .icon {
-    margin-bottom: 16px;
-    width: 22px;
-    height: 22px;
-  }
-
-  @media (max-width: 1024px) {
-    flex-direction: column;
-    text-align: center;
-  }
-}
-
-#docs {
-  border-right: 1px solid var(--border);
-
-  @media (max-width: 1024px) {
-    border-right: none;
-    border-bottom: 1px solid var(--border);
-  }
-}
-
-#next-steps ul {
+  gap: var(--space-md);
   list-style: none;
   padding: 0;
+  margin: var(--space-xs) 0 0;
+}
+
+.mast-nav a {
+  text-decoration: none;
+  font-size: var(--text-sm);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-fast) var(--ease-out);
+}
+
+.mast-nav a:hover,
+.mast-nav a:focus-visible {
+  border-color: var(--color-accent);
+}
+
+.mast-nav a:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 3px;
+}
+
+.mast-rule.double {
+  border: 0;
+  border-top: var(--rule-hair) solid var(--color-rule);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  height: 4px;
+  margin: var(--space-md) 0 0;
+}
+
+/* --- Intro --- */
+
+.intro {
+  max-width: 46ch;
+  margin: var(--space-2xl) auto var(--space-xl);
+  padding: 0 var(--page-gutter);
+  text-align: center;
+}
+
+
+
+.intro__tag {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  color: var(--color-muted);
+  margin: 0;
+}
+
+/* --- Catalogue (menu grid) --- */
+
+.catalogue {
+  padding: var(--space-xl) var(--page-gutter) var(--space-2xl);
+  max-width: 72rem;
+  margin-inline: auto;
+}
+
+.catalogue__header {
+  font-family: var(--font-outlier);
+  font-size: var(--text-sm);
+  letter-spacing: 0.04em;
+  color: var(--color-muted);
+  border-bottom: var(--rule-hair) solid var(--color-rule);
+  padding-bottom: var(--space-sm);
+  margin: 0 0 var(--space-lg);
+}
+
+.catalogue__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-lg) var(--space-xl);
+}
+
+.item {
+  padding-top: var(--space-md);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.item__swatch {
+  display: block;
+  width: var(--space-md);
+  height: var(--space-md);
+  border-radius: 50%;
+  background: var(--color-accent);
+  margin-bottom: var(--space-sm);
+}
+
+.item__name {
+  font-family: var(--font-display);
+  font-size: var(--text-md);
+  font-weight: 600;
+  margin: 0 0 var(--space-2xs);
+}
+
+.item__desc {
+  font-size: var(--text-sm);
+  color: var(--color-neutral);
+  margin: 0 0 var(--space-sm);
+  max-width: 32ch;
+}
+
+.item__price {
+  font-family: var(--font-outlier);
+  font-size: var(--text-sm);
+  color: var(--color-accent);
+  margin: 0;
+}
+
+/* --- Historia --- */
+
+.historia {
+  max-width: 60ch;
+  margin: 0 auto;
+  padding: var(--space-2xl) var(--page-gutter);
+  border-top: var(--rule-hair) solid var(--color-rule);
+}
+
+.historia__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin: 0 0 var(--space-md);
+}
+
+.historia__body {
+  margin: 0;
+  color: var(--color-neutral);
+}
+
+/* --- Visítanos --- */
+
+.visitanos {
+  max-width: 60ch;
+  margin: 0 auto;
+  padding: 0 var(--page-gutter) var(--space-2xl);
+}
+
+.visitanos__title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 600;
+  margin: 0 0 var(--space-md);
+}
+
+.visitanos__line {
+  margin: 0 0 var(--space-2xs);
+  color: var(--color-neutral);
+}
+/* --- Testimonios --- */
+
+.overflow-hidden {
+  overflow: hidden;
+}
+
+.testimonials-marquee {
+  /* desvanece los bordes izquierdo y derecho */
+  mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+}
+
+.testimonials-track {
   display: flex;
-  gap: 8px;
-  margin: 32px 0 0;
+  width: max-content;              /* clave: que no se comprima */
+  animation: testimonials-scroll 46s linear infinite;
+}
 
-  .logo {
-    height: 18px;
-  }
+.list { display: flex; flex-shrink: 0; gap: 1rem; padding-inline: .5rem; }
+.card { width: 20rem; flex-shrink: 0; }
+@media (min-width: 640px) { .card { width: 24rem; } }
 
-  a {
-    color: var(--text-h);
-    font-size: 16px;
-    border-radius: 6px;
-    background: var(--social-bg);
-    display: flex;
-    padding: 6px 12px;
-    align-items: center;
-    gap: 8px;
-    text-decoration: none;
-    transition: box-shadow 0.3s;
+@keyframes testimonials-scroll {
+  to { transform: translateX(-50%); }
+}
 
-    &:hover {
-      box-shadow: var(--shadow);
-    }
-    .button-icon {
-      height: 18px;
-      width: 18px;
-    }
-  }
+/* la pausa al pasar el ratón */
+.testimonials-marquee:hover .testimonials-track {
+  animation-play-state: paused;
+}
 
-  @media (max-width: 1024px) {
-    margin-top: 20px;
-    flex-wrap: wrap;
-    justify-content: center;
-
-    li {
-      flex: 1 1 calc(50% - 8px);
-    }
-
-    a {
-      width: 100%;
-      justify-content: center;
-      box-sizing: border-box;
-    }
+/* accesibilidad: sin animación, scroll manual */
+@media (prefers-reduced-motion: reduce) {
+  .testimonials-track {
+    width: auto;
+    animation: none;
+    overflow-x: auto;
   }
 }
 
-#spacer {
-  height: 88px;
-  border-top: 1px solid var(--border);
-  @media (max-width: 1024px) {
-    height: 48px;
-  }
+
+
+/* --- testimonios--- */
+
+
+
+/* --- Footer (Ft6 Letter close) --- */
+
+.foot-letter {
+  padding: var(--space-2xl) var(--page-gutter);
+  max-width: 60ch;
+  margin: 0 auto;
+  border-top: var(--rule-hair) solid var(--color-rule);
 }
 
-.ticks {
-  position: relative;
-  width: 100%;
+.foot-letter__close {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-lg);
+  line-height: 1.4;
+  margin: 0;
+}
 
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    top: -4.5px;
-    border: 5px solid transparent;
-  }
+.foot-letter__sign {
+  font-style: normal;
+  font-weight: 600;
+}
 
-  &::before {
-    left: 0;
-    border-left-color: var(--border);
-  }
-  &::after {
-    right: 0;
-    border-right-color: var(--border);
+.foot-letter__ps {
+  font-size: var(--text-sm);
+  margin-top: var(--space-md);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition-duration: 0.01ms !important;
+    /* Fix: el badge usa animation (pulso + flash), no solo transition; sin
+       esto, prefers-reduced-motion apagaba el hover pero no el parpadeo
+       continuo del punto ni el destello. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
