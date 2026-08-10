@@ -52,4 +52,23 @@
      al 90% del viewport. */
   --card-width: clamp(280px, 90vw, 360px);
   --card-height: 480px;
+
+  /* --- Badge de estado (abierto/cerrado) ---
+     RN2 exige #FF3333 para "cerrado": no se sustituye por otro rojo (p.ej.
+     #e74c3c de una paleta de referencia) sin autorización explícita. */
+  --color-open-base:     #2ecc71; /* = RN1 */
+  --color-open-hover:    #27ae60;
+  --color-closed-base:   #FF3333; /* = RN2 */
+  --color-closed-hover:  #c0392b;
+  --color-white:         #ffffff; /* texto, punto y flash del badge */
+
+  /* Fondo de la cápsula neutra que envuelve el badge (degradado 3 paradas) */
+  --color-badge-bg-from: #f8fafc;
+  --color-badge-bg-mid:  #f1f5f9;
+  --color-badge-bg-to:   #e2e8f0;
+
+  /* Tiempos de las animaciones del badge */
+  --dur-flash: 600ms;              /* destello de cámara, una sola vez */
+  --dur-pulso: 1800ms;             /* punto "en vivo", loop infinito */
+  --estado-delay-cerrado: 0.15s;   /* CERRADO entra 0.15s después de ABIERTO */
 }

@@ -73,8 +73,15 @@ marker.bindPopup("<b>Hola☕︎</b><br><i>Bienvenido a mirante</i>").openPopup()
 
 
 // Determina si el sitio está abierto o cerrado según la hora actual
+// RN3: horario de atención = lunes a domingo, 8:00 (inclusive) a 21:00
+// (exclusive). Se nombran como constantes en vez de dejar 8 y 21 sueltos en
+// el if, para que el origen de la regla sea obvio y un cambio futuro de
+// horario se edite en un solo lugar.
+const HORA_APERTURA_RN3 = 8;
+const HORA_CIERRE_RN3 = 21;
+
 var horaActual = new Date();
-if (horaActual.getHours() >= 8 && horaActual.getHours() < 21){
+if (horaActual.getHours() >= HORA_APERTURA_RN3 && horaActual.getHours() < HORA_CIERRE_RN3){
 
     // Bien: ahora sí agrega la clase 'abierto' además del texto — es lo que
     // hace que .estado tome el color verde de RN1 (definido en style.css).
@@ -91,7 +98,10 @@ if (horaActual.getHours() >= 8 && horaActual.getHours() < 21){
     // cambia de color".
     document.querySelector('.estado').classList.toggle('abierto', false);
     document.querySelector('.estado').classList.add('cerrado');
-    document.querySelector('.estado').textContent = 'Mirante esta cerrado';
+
+    // Fix: antes decía la oración 'Mirante esta cerrado'; Job 4 (Escenario 2)
+    // exige literalmente la palabra "CERRADO", igual que "ABIERTO" arriba.
+    document.querySelector('.estado').textContent = 'CERRADO';
 }
 
 

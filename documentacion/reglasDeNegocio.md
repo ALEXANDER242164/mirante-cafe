@@ -7,7 +7,7 @@ Los criterios de aceptación en [requerimientos.md](requerimientos.md) las refer
 |---|---|
 |RN1|Si el establecimiento está **abierto**, el color usado para representarlo es `#2ecc71`.|
 |RN2|Si el establecimiento está **cerrado**, el color usado para representarlo es `#FF3333`.|
-|RN3|El horario de atención del establecimiento es de **lunes a domingo, de 8:00 (inclusive) a 19:00 (exclusive)**.|
+|RN3|El horario de atención del establecimiento es de **lunes a domingo, de 8:00 (inclusive) a 21:00 (exclusive)**.|
 |RN4|El elemento visual que representa el estado abierto/cerrado es **el mismo elemento**; únicamente cambia de color según RN1 y RN2.|
 |RN5|Las imágenes deben ser **fotografías reales del establecimiento**, proporcionadas por el local. No se permiten imágenes de banco (stock).|
 |RN6|Las imágenes deben corresponder a **productos que el local ofrece actualmente**. Si un producto deja de venderse, su imagen se retira del sitio.|
@@ -24,6 +24,6 @@ Los criterios de aceptación en [requerimientos.md](requerimientos.md) las refer
 
 - **RN3** define el único origen de verdad del horario. Cualquier cambio de horario se hace aquí primero.
 - **RN3** usa límites explícitos (inclusive/exclusive) para evitar ambigüedad al comparar la hora actual:
-  a las 8:00 en punto ya está abierto; a las 19:00 en punto ya está cerrado.
+  a las 8:00 en punto ya está abierto; a las 21:00 en punto ya está cerrado.
 - **RN14**: el mecanismo técnico para lograr el loop infinito (cómo se implementa) todavía no está decidido. Queda pendiente de diseño antes de implementarse.
 - **Pendiente:** el lugar exacto de las imágenes de productos (Job 3) dentro del orden general definido en Job 1 todavía no está decidido.

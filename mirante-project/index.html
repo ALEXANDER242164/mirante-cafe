@@ -41,7 +41,16 @@
         <div class="contenedor">
 
           <div class="tarjeta">
-            <h2>INFORMACION</h2>
+            <div class="tarjeta__header">
+              <h2>INFORMACIÓN</h2>
+              <!-- Cambio: el badge se movió aquí, junto al título, para que
+                   sea visible sin bajar la vista dentro de la tarjeta
+                   (Job 4: usuario de paso quiere un vistazo rápido). Antes
+                   vivía solo al final de la tarjeta. -->
+              <span class="estado-capsula">
+                <span class="estado"></span>
+              </span>
+            </div>
             <p class="direccion">
               Luis Donaldo Colosio, 77728 <br>Playa del Carmen, Quintana Roo
             </p>
@@ -56,7 +65,11 @@
               <strong>8:00 AM - 9:00 PM</strong>
             </div>
 
-            <span class="estado"></span>
+            <!-- Reservado para un futuro click que abra la ubicación en el
+                 mapa. Intencionalmente vacío por ahora: no se implementa la
+                 funcionalidad, solo se reserva el espacio (ver
+                 .tarjeta__accion en style.css). -->
+            <div class="tarjeta__accion"></div>
 
           </div>
 

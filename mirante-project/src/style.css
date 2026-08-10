@@ -73,12 +73,20 @@ a {
 
   padding: var(--space-md);
 
-  
+  /* Fix: .tarjeta pasa a ser un contenedor flex en columna para poder anclar
+     .tarjeta__accion al fondo con margin-top:auto, aprovechando el espacio
+     vertical libre que dejó .estado al mudarse a la cabecera. */
+  display: flex;
+  flex-direction: column;
 
 }
 
 .tarjeta h2{
-  margin: auto;
+  /* Fix: antes "margin:auto" centraba el h2 cuando era hijo suelto de un
+     .tarjeta en flujo de bloque. Ahora vive dentro de .tarjeta__header
+     (fila flex junto al badge), así que se resetea a 0 y el layout lo
+     controla .tarjeta__header. */
+  margin: 0;
 
   font-family: var(--font-display);
   font-size: var(--text-lg);
@@ -87,6 +95,19 @@ a {
   color: var(--color-ink);
 
 
+}
+
+.tarjeta__header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-sm);
+
+  /* Fix (mismo problema que .contenedor más arriba): a 280px de ancho de
+     tarjeta ("INFORMACION" + badge) no cabe en una sola fila. flex-wrap
+     evita que se corte silenciosamente (html tiene overflow-x: clip). */
+  flex-wrap: wrap;
+  margin-bottom: var(--space-md);
 }
 
 .direccion{
@@ -117,18 +138,118 @@ a {
   gap: var(--space-2xs);
 }
 
+/* Reservado para una futura función de "abrir ubicación en mapa" al hacer
+   click (no implementada todavía — ver comentario en index.html). Se ancla
+   al fondo con margin-top:auto para ocupar el espacio que .estado dejó
+   libre al mudarse a la cabecera, con un borde punteado para que se lea
+   como un espacio intencional y no como un hueco vacío por error. */
+.tarjeta__accion{
+  margin-top: auto;
+  min-height: 48px;
+  border: 1px dashed var(--color-rule);
+  border-radius: var(--space-2xs);
+}
+
 /* estado abierto/cerrado */
+
+/* Cápsula: fondo neutro (degradado de 3 paradas) que envuelve el badge de
+   color. El color de estado (RN1/RN2) vive en el .estado interior, no aquí,
+   para que la cápsula sea puramente decorativa/neutra. */
+.estado-capsula{
+  display: inline-flex;
+  padding: var(--space-3xs);
+  border-radius: 999px;
+  background: linear-gradient(
+    135deg,
+    var(--color-badge-bg-from),
+    var(--color-badge-bg-mid),
+    var(--color-badge-bg-to)
+  );
+}
+
+/* Fix: antes .abierto no tenía ninguna regla base compartida con .cerrado
+   (display/padding/color propios), así que se veía "sin estilo" frente a
+   .cerrado. Ahora hay UNA sola regla base .estado (RN4: "mismo elemento,
+   solo cambia de color") y .abierto/.cerrado solo definen las variables de
+   color que esa base consume vía var(--estado-color). */
+.estado{
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2xs);
+  padding: var(--space-2xs) var(--space-md);
+  border-radius: 999px;
+
+  font-family: var(--font-outlier);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--color-white);
+
+  background-color: var(--estado-color);
+
+  transition:
+    box-shadow var(--dur-fast) var(--ease-out),
+    transform  var(--dur-fast) var(--ease-out);
+}
+
 .estado.abierto{
-  background-color: #2ecc71;
-  background-size: cover;
+  --estado-color: var(--color-open-base);
+  --estado-color-hover: var(--color-open-hover);
 }
 .estado.cerrado{
-  background-color: #FF3333;
-  display: block;
-  padding: 40px;
-  margin: 0 auto;
-  width: fit-content;
-  color: var(--color-paper);
+  --estado-color: var(--color-closed-base);
+  --estado-color-hover: var(--color-closed-hover);
+}
+
+/* Punto "en vivo": círculo sólido con un anillo animado vía box-shadow (un
+   solo pseudo-elemento, no dos capas) — se repite para siempre. */
+.estado::before{
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-white);
+  animation: estado-pulso var(--dur-pulso) var(--ease-out) infinite;
+}
+@keyframes estado-pulso{
+  0%   { box-shadow: 0 0 0 0   rgba(255,255,255,0.55); }
+  70%  { box-shadow: 0 0 0 8px rgba(255,255,255,0); }
+  100% { box-shadow: 0 0 0 0   rgba(255,255,255,0); }
+}
+
+/* Destello de cámara al entrar: cubre el badge una sola vez y se queda
+   transparente (animation-fill-mode: forwards es obligatorio aquí — sin
+   él, al terminar la animación el ::after volvería a su opacity base y
+   taparía el badge para siempre). */
+.estado::after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: var(--color-white);
+  pointer-events: none;
+  animation: estado-flash var(--dur-flash) var(--ease-out) 1 forwards;
+}
+@keyframes estado-flash{
+  from { opacity: 0.9; }
+  to   { opacity: 0; }
+}
+
+/* CERRADO entra 0.15s más tarde que ABIERTO (spec del rediseño): mismo
+   comportamiento en ambos estados, solo se retrasa el arranque de las
+   animaciones de entrada/loop de .cerrado. */
+.estado.cerrado::before,
+.estado.cerrado::after{
+  animation-delay: var(--estado-delay-cerrado);
+}
+
+/* Hover: brillo del color de estado + leve escalado. Se dispara al pasar el
+   ratón por la cápsula completa (área de hover un poco más generosa que
+   el pill solo), pero el brillo/escala se aplican al .estado interior. */
+.estado-capsula:hover .estado{
+  box-shadow: 0 0 var(--space-lg) 0 var(--estado-color-hover);
+  transform: scale(1.04);
 }
 
 
@@ -388,5 +509,10 @@ a {
 @media (prefers-reduced-motion: reduce) {
   * {
     transition-duration: 0.01ms !important;
+    /* Fix: el badge usa animation (pulso + flash), no solo transition; sin
+       esto, prefers-reduced-motion apagaba el hover pero no el parpadeo
+       continuo del punto ni el destello. */
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
   }
 }
