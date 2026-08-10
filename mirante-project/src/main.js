@@ -63,11 +63,14 @@ async function cargarDatos(){
 
 }
 // Inicializa el mapa Leaflet y lo centra en las coordenadas de ejemplo
-var map = L.map('map').setView([51.505, -0.09], 13);
+var map = L.map('map').setView([20.63917348193299, -87.06469827360385], 16);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
+var marker = L.marker([20.63917348193299, -87.06469827360385]).addTo(map);
+marker.bindPopup("<b>Hola☕︎</b><br><i>Bienvenido a mirante</i>").openPopup();
+
 
 // Determina si el sitio está abierto o cerrado según la hora actual
 var horaActual = new Date();
